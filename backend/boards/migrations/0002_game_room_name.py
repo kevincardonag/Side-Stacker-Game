@@ -6,14 +6,14 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('boards', '0001_initial'),
+        ("boards", "0001_initial"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='game',
-            name='room_name',
-            field=models.CharField(default=1, max_length=255, verbose_name='Room name'),
+            model_name="game",
+            name="room_name",
+            field=models.CharField(default=1, max_length=255, verbose_name="Room name"),
             preserve_default=False,
         ),
     ]
