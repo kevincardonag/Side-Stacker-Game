@@ -22,13 +22,6 @@ class InputMatrix extends Component {
         }
     }
 
-    componentWillReceiveProps(nextProps) {
-        if(nextProps !== null){
-            if (nextProps.win === true) {
-                //alert(`Player ${this.props.player} Won`)
-            }
-        }
-    }
     // rendering
     render(){
     const {board, win, player} = this.props
