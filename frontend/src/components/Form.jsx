@@ -8,14 +8,15 @@ class Form extends Component{
         this.state = {
             inputName: "",
             board:[],
-            win: false,
             player: "",
+            max_movements: false,
+            winner: null,
         }
         this.socketRef = null;
     }
-    setValue = (row, col, player) => {
+    setValue = (row, side, player) => {
         this.socketRef.send(JSON.stringify({
-            'col': col,
+            'side': side,
             'row': row,
             'player': player,
             'room_name': this.state.inputName,
@@ -33,8 +34,9 @@ class Form extends Component{
             const message = JSON.parse(e.data).message
             this.setState({
                 board: message.board,
-                win: message.win,
                 player: message.player,
+                max_movements: message.max_movements,
+                winner: message.winner,
             })
         };
 
@@ -49,8 +51,9 @@ class Form extends Component{
         this.setState({
             inputName: "",
             board:[],
-            win: false,
             player: "",
+            max_movements: false,
+            winner: "",
         })
     }
     render(){
@@ -58,10 +61,11 @@ class Form extends Component{
             ? <InputMatrix
                 player={this.state.player}
                 board={this.state.board}
-                win={this.state.win}
                 setValue={this.setValue}
+                max_movements={this.state.max_movements}
+                winner={this.state.winner}
             />
-            : <p> Please enter a room to start the game </p>
+            : <p> Please enter a room name to start the game </p>
 
         return(
             <div>
@@ -73,20 +77,28 @@ class Form extends Component{
                             id='room_name'
                             placeholder='Room name'
                             name='room_name'
-                            onChange={e => this.setState({inputName: e.target.value})}
+                            onChange={e => this.setState({inputName: e.target.value.replace(/ /g,'')})}
                             value={this.state.inputName}
                             disabled={!(this.state.board.length === 0)}
                         />
                         <p>
-                            <button disabled={! (this.state.board.length === 0)}> Enter room </button >
-                            <button onClick={this.handleClick } disabled={this.state.board.length === 0}> Change room </button>
+                            <button
+                                disabled={! (this.state.board.length === 0)}
+                            >
+                                Enter room
+                            </button >
+                            <button
+                                onClick={this.handleClick }
+                                disabled={this.state.board.length === 0}
+                            >
+                                Change room
+                            </button>
                         </p>
 
                     </form>
                 </div>
                 {displayBoard}
             </div>
-
         )
     }
 }

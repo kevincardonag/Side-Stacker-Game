@@ -7,3 +7,4 @@ PLAYERS = (
     ("x", _("Player 1")),
     ("o", _("Player 2")),
 )
+MAX_MOVEMENTS = 49
