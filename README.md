@@ -7,11 +7,16 @@
 Django version: 3.2
 
 ## Project Setup
+* You need to create a postgres database. 
+* You need to create a .env with DATABASE_URL variable defined.
 
-### Unix Linux systems
-
-You need to create a .env with DATABASE_URL variable defined.
-
+```
+DEBUG=True
+DJANGO_SECRET_KEY="str_key"
+DATABASE_URL=postgres://user:pass@localhost:5432/name_bd
+REDIS_URL=redis://127.0.0.1
+```
+* Run the backend project
 ```plain
 cd backend 
 pip install -r requirements.txt
