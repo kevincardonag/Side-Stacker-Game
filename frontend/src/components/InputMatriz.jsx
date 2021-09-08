@@ -14,7 +14,8 @@ function spanStyles(value){
         minHeight: "20px",
         textAlign: "center",
         width: "80%",
-        color: textColor
+        color: textColor,
+        marginInline: "auto",
     }
     return styles
 }
@@ -35,22 +36,16 @@ class InputMatrix extends Component {
     }
 
     handleInputChange = (indexRow, side, event) => {
-        if(event.target.value === this.props.player ) {
-            this.props.setValue(indexRow, side, event.target.value)
-            event.target.value = ""
-        }else{
-            alert(`Is ${this.props.player}'s turn`)
-            event.target.value = ""
-        }
+        this.props.setValue(indexRow, side, this.props.player)
     }
 
     // rendering
     render(){
-    const {board, player, max_movements, winner} = this.props
+    const {board, max_movements, winner} = this.props
     return (
         <div className="InputMatriz">
             <hr style={{width: "70%"}} />
-            <h1> Is <strong style={labelWinStyles(player)}> {player}</strong>'s turn </h1>
+            <h1> <strong> {this.props.messageTurn} </strong> </h1>
                 { winner
                     ? <div>
                         <p style={labelWinStyles(winner)}> PLAYER {winner} WON</p>
@@ -80,33 +75,32 @@ class InputMatrix extends Component {
                     <tbody>
                     {board.map((row, indexRow) => (
                         <tr key={indexRow} className="InputMatriz__rows">
-                            <p>
-                                {indexRow +1 }
-                                <input
+                            <p style={{ textAlign:"center"}}>
+                                <button
                                     disabled={winner || max_movements}
-                                    onChange={(event) => this.handleInputChange(indexRow,"L", event)}
-                                    style={{ width:"20px"}}
+                                    onClick={(event) => this.handleInputChange(indexRow,"L", event)}
                                     className="InputMatriz__input"
                                     id={ `L-${indexRow}`}
                                     name={ `L-${indexRow}`}
-                                />
+                                >
+                                    {indexRow +1 }
+                                </button>
                             </p>
                             {row.map((value, indexCol) => (
                                 <td key={`${indexRow}-${indexCol}`} className="InputMatriz__col" style={{width: '10%' }}>
-                                    <p style={spanStyles(value)}> {value}</p>
+                                    <p style={spanStyles(value)}>{value}</p>
                                 </td>
                             ))}
-                            <p>
-                                <input
+                            <p style={{ textAlign:"center"}}>
+                                <button
                                     disabled={winner || max_movements}
-                                    onChange={(event) => this.handleInputChange(indexRow,"R", event)}
-                                    style={{ marginLeft: "10px", width:"20px"}}
+                                    onClick={(event) => this.handleInputChange(indexRow,"R", event)}
                                     className="InputMatriz__input"
                                     id={ `R-${indexRow}`}
                                     name={ `R-${indexRow}`}
-                                />
-                                {'\u00A0'}
+                                >
                                 {indexRow + 1}
+                                </button>
                             </p>
                         </tr>
                     ))}

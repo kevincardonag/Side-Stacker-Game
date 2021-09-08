@@ -8,9 +8,7 @@ function App() {
       <header className="App-header">
         <h1> Side-Stacker Game </h1>
       </header>
-      <body className="App-body">
       <Form />
-      </body>
     </div>
   );
 }
