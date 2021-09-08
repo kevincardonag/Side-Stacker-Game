@@ -6,6 +6,7 @@ class Form extends Component{
     constructor() {
         super();
         this.state = {
+            messageTurn: "",
             inputName: "",
             board:[],
             player: "",
@@ -31,13 +32,21 @@ class Form extends Component{
             console.log('WebSocket open');
         };
         this.socketRef.onmessage = e => {
-            const message = JSON.parse(e.data).message
-            this.setState({
-                board: message.board,
-                player: message.player,
-                max_movements: message.max_movements,
-                winner: message.winner,
-            })
+            let message = JSON.parse(e.data).message
+            let messageTurn = JSON.parse(e.data).message_turn
+            if (message !== undefined){
+                this.setState({
+                    board: message.board,
+                    player: message.player,
+                    max_movements: message.max_movements,
+                    winner: message.winner,
+                })
+            }
+            if (messageTurn !== undefined){
+                this.setState({
+                    messageTurn: messageTurn
+                })
+            }
         };
 
         this.socketRef.onerror = e => {
@@ -64,6 +73,7 @@ class Form extends Component{
                 setValue={this.setValue}
                 max_movements={this.state.max_movements}
                 winner={this.state.winner}
+                messageTurn={this.state.messageTurn}
             />
             : <p> Please enter a room name to start the game </p>
 

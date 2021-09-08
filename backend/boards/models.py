@@ -34,6 +34,12 @@ class Game(models.Model):
     number_of_movements = models.IntegerField(
         verbose_name=_("Number of movements"), default=0
     )
+    id_player_one = models.CharField(
+        verbose_name=_("Id channel player 1"), blank=True, null=True, max_length=255
+    )
+    id_player_two = models.CharField(
+        verbose_name=_("Id channel player 1"), blank=True, null=True, max_length=255
+    )
 
     def save(self, *args, **kwargs):
         if self.pk is None:
